@@ -18,9 +18,10 @@ class puppet::storeconfigs (
     $dbsocket
 ) {
 
-  # This version of activerecord works with Ruby 1.8.5 and Centos 5.
-  # This ensure should be fixed.
-  Package['activerecord'] -> Class['puppet::storeconfigs']
+  package { $puppet::params::activerecord_package:
+    ensure    => latest,
+    provider  => $package_provider,
+  }
 
   case $dbadapter {
     'sqlite3': {
