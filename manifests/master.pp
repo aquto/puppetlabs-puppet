@@ -127,13 +127,37 @@ class puppet::master (
       class { '::passenger': }
     }
 
-    apache::vhost { "puppet-$puppet_site":
-      port     => $puppet_passenger_port,
-      priority => '40',
-      docroot  => $puppet_docroot,
-      template => 'puppet/apache2.conf.erb',
-      require  => [ File['/etc/puppet/rack/config.ru'], File['/etc/puppet/puppet.conf'] ],
-      ssl      => true,
+    apache::vhost { "puppet-${puppet_site}":
+      ssl             => true,
+      ssl_certs_dir   => "${puppet_ssldir}/certs",
+      ssl_cert        => "${puppet_ssldir}/certs/${certname}.pem",
+      ssl_key         => "${puppet_ssldir}/private_keys/${certname}.pem",
+      ssl_chain       => "${puppet_ssldir}/ca/ca_crt.pem",
+      ssl_ca          => "${puppet_ssldir}/ca/ca_crt.pem",
+      ssl_crl         => "${puppet_ssldir}/ca/ca_crl.pem",
+      port            => $puppet_passenger_port,
+      priority        => '40',
+      docroot         => $puppet_docroot,
+      rack_base_uris  => '/',
+      directories     => [{
+        'path'           => '/etc/puppet/rack',
+        'options'        => 'none',
+        'allow_override' => 'none',
+        'order'          => ['allow', 'deny'],
+        'allow'          => 'from all',
+        }],
+      request_headers => [
+        'unset X-Forwarded-For',
+        'set X-SSL-Subject %{SSL_CLIENT_S_DN}e',
+        'set X-Client-DN %{SSL_CLIENT_S_DN}e',
+        'set X-Client-Verify %{SSL_CLIENT_VERIFY}e'],
+      custom_fragment => '  SSLProtocol -ALL +SSLv3 +TLSv1
+  SSLCipherSuite ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP
+  SSLVerifyClient optional
+  SSLVerifyDepth  1
+  SSLOptions +StdEnvVars +ExportCertData
+',
+      require         => [File['/etc/puppet/rack/config.ru'], File['/etc/puppet/puppet.conf']],
     }
 
     file { ["/etc/puppet/rack", "/etc/puppet/rack/public"]:
