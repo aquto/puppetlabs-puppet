@@ -8,9 +8,13 @@ ssl_client_header         = SSL_CLIENT_S_DN
 ssl_client_verify_header  = SSL_CLIENT_VERIFY
 certname                  = <%= certname %>
 report                    = true
-reports                   = store, http
-<% if dashboard_port != 'UNSET' -%>
-reporturl                 = http://<%= puppet_site %>:<%= dashboard_port %>/reports
-<% else -%>
-reporturl                 = http://<%= puppet_site %>/reports
+reports                   = <%= @reports.join(',') %>
+<% if @reporturl -%>
+reporturl                 = <%= @reporturl %>
+<% end -%>
+
+<% if @puppet_extra_configs.has_key?('master') -%>
+<% @puppet_extra_configs['master'].sort.each do |key,value| -%>
+    <%= key %><%= ' ' * (26-key.length) %>= <%= value %>
+<% end -%>
 <% end -%>
