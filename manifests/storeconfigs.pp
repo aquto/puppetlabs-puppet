@@ -11,11 +11,13 @@
 # Sample Usage:
 #
 class puppet::storeconfigs (
-    $dbadapter,
-    $dbuser,
-    $dbpassword,
-    $dbserver,
-    $dbsocket
+  $dbadapter        = $puppet::params::storeconfigs_dbadapter,
+  $dbuser           = $puppet::params::storeconfigs_dbuser,
+  $dbpassword       = $puppet::params::storeconfigs_dbpassword,
+  $dbserver         = $puppet::params::storeconfigs_dbserver,
+  $dbsocket         = $puppet::params::storeconfigs_dbsocket,
+  $dbport           = undef,
+  $package_provider = undef
 ) {
 
   package { $puppet::params::activerecord_package:
@@ -32,6 +34,13 @@ class puppet::storeconfigs (
         "puppet::storeconfigs::mysql":
           dbuser     => $dbuser,
           dbpassword => $dbpassword,
+      }
+    }
+    'puppetdb': {
+      class { 'puppet::storeconfigs::puppetdb':
+        dbserver          => $dbserver,
+        dbport            => $dbport,
+        package_provider  => $package_provider,
       }
     }
     default: { err("target dbadapter $dbadapter not implemented") }
