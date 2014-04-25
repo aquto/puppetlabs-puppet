@@ -1,5 +1,5 @@
 [main]
-server										= <%= puppet_server %>
+server										= <%= @puppet_server %>
 modulepath								= /etc/puppet/modules/dist:/etc/puppet/modules/site
 logdir										= /var/log/puppet
 vardir										= /var/lib/puppet
@@ -25,6 +25,6 @@ reporturl 								= http://dashboard.puppetlabs.com/reports
 storeconfigs 							= true
 dbadapter 								= mysql
 dbuser 										= puppet
-dbpassword 								= <%= puppet_storedconfig_password %>
+dbpassword 								= <%= @puppet_storedconfig_password %>
 dbserver 									= localhost
 dbsocket 									= /var/run/mysqld/mysqld.sock

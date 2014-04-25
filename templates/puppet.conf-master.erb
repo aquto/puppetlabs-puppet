@@ -1,12 +1,12 @@
 
 [master]
-modulepath                = <%= modulepath %>
-manifest                  = <%= manifest %>
+modulepath                = <%= @modulepath %>
+manifest                  = <%= @manifest %>
 environment               = <%= @environment %>
-autosign                  = <%= autosign %>
+autosign                  = <%= @autosign %>
 ssl_client_header         = SSL_CLIENT_S_DN
 ssl_client_verify_header  = SSL_CLIENT_VERIFY
-certname                  = <%= certname %>
+certname                  = <%= @certname %>
 report                    = true
 reports                   = <%= @reports.join(',') %>
 <% if @reporturl -%>
