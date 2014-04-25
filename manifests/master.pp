@@ -171,7 +171,7 @@ class puppet::master (
 
     file { '/etc/puppet/rack/config.ru':
       ensure  => link,
-      target  => '/usr/share/puppet/ext/rack/files/config.ru',
+      target  => '/usr/share/puppet/ext/rack/config.ru',
       mode    => '0644',
       require => [Package[$puppet_master_package], File['/etc/puppet/rack']]
     }
