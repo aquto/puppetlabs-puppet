@@ -29,7 +29,7 @@ class puppet::params {
   $puppet_passenger_port            = '8140'
 
   $puppetdb_terminus_package        = 'puppetdb-terminus'
-  $puppetdb_terminus_version        = 'latest'
+  $puppetdb_terminus_version        = 'installed'
 
   case $::operatingsystem {
     'centos', 'redhat', 'fedora', 'scientific': {
