@@ -15,6 +15,6 @@ reporturl                 = <%= @reporturl %>
 
 <% if @puppet_extra_configs.has_key?('master') -%>
 <% @puppet_extra_configs['master'].sort.each do |key,value| -%>
-    <%= key %><%= ' ' * (26-key.length) %>= <%= value %>
+<%= key %><%= ' ' * (26-key.length) %>= <%= value %>
 <% end -%>
 <% end -%>
