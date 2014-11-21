@@ -44,7 +44,6 @@ class puppet::params {
       $puppet_logdir                = '/var/log/puppet'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/var/lib/puppet/ssl'
-      $activerecord_package         = 'rubygem-activerecord'
     }
     'ubuntu', 'debian': {
       $puppet_master_package        = 'puppet'
@@ -58,7 +57,6 @@ class puppet::params {
       $puppet_logdir                = '/var/log/puppet'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/var/lib/puppet/ssl'
-      $activerecord_package         = 'rubygem-activerecord'
     }
     'freebsd': {
       $puppet_agent_service         = 'puppet'

@@ -20,11 +20,6 @@ class puppet::storeconfigs (
   $package_provider = undef
 ) {
 
-  package { $puppet::params::activerecord_package:
-    ensure    => latest,
-    provider  => $package_provider,
-  }
-
   case $dbadapter {
     'sqlite3': {
       include puppet::storeconfigs::sqlite
