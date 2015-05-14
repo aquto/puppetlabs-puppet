@@ -53,7 +53,6 @@ class puppet::agent(
       ensure    => running,
       enable    => true,
       hasstatus => true,
-      require   => File['/etc/puppet/puppet.conf'],
       subscribe => Package[$puppet_agent_name],
       #before    => Service['httpd'];
     }
