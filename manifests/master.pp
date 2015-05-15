@@ -161,7 +161,7 @@ class puppet::master (
   SSLVerifyDepth  1
   SSLOptions +StdEnvVars +ExportCertData
 ',
-      require         => [File['/etc/puppet/rack/config.ru'], File['/etc/puppet/puppet.conf']],
+      require         => [File['/etc/puppet/rack/config.ru']],
     }
 
     file { ["/etc/puppet/rack", "/etc/puppet/rack/public"]:
